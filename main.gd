@@ -15,3 +15,8 @@ func _ready() -> void:
 	
 	camera.position.x = pixel_size * (width / 2)
 	camera.position.y = pixel_size * (height / 2)
+	
+	camera.limit_left = pixel_size * (width / 2) - 800
+	camera.limit_right = pixel_size * (width / 2) + 800
+	camera.limit_top = pixel_size * (height / 2) - 600
+	camera.limit_bottom = pixel_size * (height / 2) + 600
