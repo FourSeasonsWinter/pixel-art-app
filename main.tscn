@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://cqrp4pj2dkesv"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_xjocg"]
+[ext_resource type="Script" path="res://camera.gd" id="2_ayib2"]
+[ext_resource type="Shader" path="res://assets/background.gdshader" id="2_b67sm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_17jsc"]
+shader = ExtResource("2_b67sm")
+shader_parameter/background_color = Color(0, 0, 0, 1)
+shader_parameter/line_color = Color(0, 1, 1, 1)
+shader_parameter/line_freq = 9.56
+shader_parameter/height = 0.6
+shader_parameter/speed = 0.8
+shader_parameter/scale = Vector2(2, 16)
+
+[node name="Main" type="Node"]
+script = ExtResource("1_xjocg")
+width = 9
+height = 9
+
+[node name="Background" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_17jsc")
+offset_left = -304.0
+offset_top = -272.0
+offset_right = 402.0
+offset_bottom = 264.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = -400
+limit_top = -600
+limit_right = 800
+limit_bottom = 700
+position_smoothing_enabled = true
+position_smoothing_speed = 9.0
+script = ExtResource("2_ayib2")

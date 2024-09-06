@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://3uefab67dft3"]
+
+[ext_resource type="Script" path="res://pixel.gd" id="1_6tdby"]
+
+[node name="Pixel" type="ColorRect"]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_6tdby")
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+
+[node name="Line2D" type="Line2D" parent="."]
+z_index = 1
+points = PackedVector2Array(0, 0, 16, 0, 16, 16, 0, 16)
+closed = true
+width = 1.0
+default_color = Color(0.972549, 0.792157, 0.34902, 0.698039)
+sharp_limit = 0.0
+
+[connection signal="button_down" from="Button" to="." method="_on_button_down"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_mouse_exited"]
