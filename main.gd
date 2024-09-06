@@ -1,6 +1,7 @@
 extends Node
 
 @onready var camera: Camera2D = $Camera2D
+@onready var hud: Control = $hud
 @export var width := 8
 @export var height := 8
 var pixel_scene := preload("res://pixel.tscn")

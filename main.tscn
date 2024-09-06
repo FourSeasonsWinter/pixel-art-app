@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqrp4pj2dkesv"]
+[gd_scene load_steps=4 format=3 uid="uid://cqrp4pj2dkesv"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_xjocg"]
 [ext_resource type="Script" path="res://camera.gd" id="2_ayib2"]
+[ext_resource type="PackedScene" uid="uid://dwtnlealkcqyc" path="res://hud.tscn" id="3_ixn38"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_xjocg")
@@ -16,3 +17,5 @@ limit_bottom = 700
 position_smoothing_enabled = true
 position_smoothing_speed = 9.0
 script = ExtResource("2_ayib2")
+
+[node name="hud" parent="." instance=ExtResource("3_ixn38")]
