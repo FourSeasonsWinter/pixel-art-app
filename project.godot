@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="pixel_art"
-run/main_scene="res://main.tscn"
+run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://assets/icon.svg"
 
 [autoload]
 
-Globals="*res://global.gd"
+Globals="*res://scripts/global.gd"
 
 [display]
 
@@ -28,7 +28,9 @@ window/stretch/mode="canvas_items"
 [file_customization]
 
 folder_colors={
-"res://assets/": "green"
+"res://assets/": "green",
+"res://scenes/": "pink",
+"res://scripts/": "red"
 }
 
 [input]

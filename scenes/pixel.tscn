@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://3uefab67dft3"]
 
-[ext_resource type="Script" path="res://pixel.gd" id="1_6tdby"]
+[ext_resource type="Script" path="res://scripts/pixel.gd" id="1_6tdby"]
 
 [node name="Pixel" type="ColorRect"]
 offset_left = -8.0

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2csmmvtfpbpp"]
+
+[ext_resource type="Script" path="res://scripts/color_palette.gd" id="1_h524e"]
+
+[node name="ColorPalette" type="GridContainer"]
+custom_minimum_size = Vector2(68, 68)
+layout_direction = 2
+offset_right = 64.0
+offset_bottom = 128.0
+theme_override_constants/h_separation = 33
+theme_override_constants/v_separation = 33
+columns = 2
+script = ExtResource("1_h524e")
