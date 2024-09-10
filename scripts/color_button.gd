@@ -22,7 +22,7 @@ func _on_button_mouse_exited() -> void:
 
 func _on_button_up() -> void:
 	delete_timer.stop()
-	Globals.current_color = button_color
+	Globals.set_current_color(button_color)
 
 
 func _on_button_down() -> void:
