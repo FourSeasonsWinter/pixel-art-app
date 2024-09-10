@@ -11,6 +11,7 @@ var is_color_picker_visible := false
 func _ready() -> void:
 	palette_background.size.x = color_palette.size.x
 	palette_background.size.y = 2.0
+	palette_background.position = color_palette.position
 
 
 func _on_show_hide_pressed() -> void:
@@ -37,9 +38,14 @@ func _on_color_hex_input_changed() -> void:
 	color_picker.color = Color.from_string(color_hex_input.text, Color.WHITE)
 
 
+func _on_color_palette_color_deleted() -> void:
+	if not is_odd(Globals.current_palette.size()):
+		palette_background.size.y -= 33.0
+
+
 func add_color_to_palette(color: Color) -> void:
 	if color_palette.add_color(color):
-		if is_odd(color_palette.colors.size()):
+		if is_odd(Globals.current_palette.size()):
 			palette_background.size.y += 33.0
 
 

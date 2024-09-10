@@ -25,6 +25,12 @@ points = PackedVector2Array(0, 0, 32, 0, 32, 32, 0, 32)
 closed = true
 width = 2.0
 
+[node name="DeleteTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="button_down" from="ColorRect/Button" to="." method="_on_button_down"]
+[connection signal="button_up" from="ColorRect/Button" to="." method="_on_button_up"]
 [connection signal="mouse_entered" from="ColorRect/Button" to="." method="_on_button_mouse_entered"]
 [connection signal="mouse_exited" from="ColorRect/Button" to="." method="_on_button_mouse_exited"]
-[connection signal="pressed" from="ColorRect/Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="DeleteTimer" to="." method="_on_delete_timer_timeout"]
