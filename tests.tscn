@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bva11qj1awsyt"]
-
-[ext_resource type="Script" path="res://tests.gd" id="1_rhlet"]
-
-[node name="Tests" type="Node"]
-script = ExtResource("1_rhlet")
-c = Color(0.282093, 0.508892, 0.410841, 1)

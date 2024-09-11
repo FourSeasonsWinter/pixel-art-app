@@ -202,6 +202,23 @@ libraries = {
 "": SubResource("AnimationLibrary_0x025")
 }
 
+[node name="ImageSavedNotification" type="Panel" parent="CanvasLayer"]
+offset_left = 16.0
+offset_top = 544.0
+offset_right = 240.0
+offset_bottom = 584.0
+theme_override_styles/panel = ExtResource("3_nbvmn")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/ImageSavedNotification"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 256.0
+offset_bottom = 48.0
+theme_override_fonts/normal_font = ExtResource("8_88nnd")
+bbcode_enabled = true
+text = "Image saved"
+
 [connection signal="color_deleted" from="CanvasLayer/ColorPalette" to="." method="_on_color_palette_color_deleted"]
 [connection signal="color_changed" from="CanvasLayer/ColorPick/ColorPicker" to="." method="_on_color_picker_color_changed"]
 [connection signal="pressed" from="CanvasLayer/ColorPick/Add" to="." method="_on_add_pressed"]

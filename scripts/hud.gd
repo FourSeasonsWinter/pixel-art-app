@@ -56,3 +56,12 @@ func add_color_to_palette(color: Color) -> void:
 
 func is_odd(n: int) -> bool:
 	return n % 2 != 0
+
+
+func show_image_saved_notification(project_name: String, is_error: bool) -> void :
+	var text: String
+	if not is_error:
+		text = "\"[color=green]" + project_name + "[/color]\" saved!"
+	else:
+		text = "Failed to save."
+	$CanvasLayer/ImageSavedNotification/RichTextLabel.text = text

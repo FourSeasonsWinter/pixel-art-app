@@ -1,13 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://cqrp4pj2dkesv"]
+[gd_scene load_steps=6 format=3 uid="uid://cqrp4pj2dkesv"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_xjocg"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="2_ayib2"]
 [ext_resource type="PackedScene" uid="uid://dwtnlealkcqyc" path="res://scenes/hud.tscn" id="3_ixn38"]
+[ext_resource type="Shader" path="res://assets/background.gdshader" id="4_hmkf6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sdofu"]
+shader = ExtResource("4_hmkf6")
+shader_parameter/_rot = Transform2D(0.5, -0.86, 0.86, 0.5, 0, 0)
+shader_parameter/_speed = 1.1
+shader_parameter/_gradation = 0.5
 
 [node name="Main" type="Node"]
 script = ExtResource("1_xjocg")
 
+[node name="Background" type="ColorRect" parent="."]
+offset_left = -944.0
+offset_top = -552.0
+offset_right = 2536.0
+offset_bottom = 1344.0
+color = Color(0.133196, 0.133196, 0.133196, 1)
+
+[node name="CanvasBackground" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_sdofu")
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(128, 128)
 limit_left = -400
 limit_top = -600
 limit_right = 800
