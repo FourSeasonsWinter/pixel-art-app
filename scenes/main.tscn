@@ -19,7 +19,7 @@ offset_left = -944.0
 offset_top = -552.0
 offset_right = 2536.0
 offset_bottom = 1344.0
-color = Color(0.133196, 0.133196, 0.133196, 1)
+color = Color(0.899258, 0.899259, 0.899258, 1)
 
 [node name="CanvasBackground" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_sdofu")
@@ -37,3 +37,5 @@ position_smoothing_speed = 9.0
 script = ExtResource("2_ayib2")
 
 [node name="hud" parent="." instance=ExtResource("3_ixn38")]
+
+[connection signal="save_image" from="hud" to="." method="save_image"]

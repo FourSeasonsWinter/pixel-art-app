@@ -1,4 +1,6 @@
 extends Control
+signal save_image
+signal export_image
 
 @onready var color_picker: ColorPicker = $CanvasLayer/ColorPick/ColorPicker
 @onready var color_palette: Container = $CanvasLayer/ColorPalette
@@ -9,12 +11,16 @@ var is_color_picker_visible := false
 
 
 func _ready() -> void:
-	palette_background.size.x = color_palette.size.x
-	palette_background.size.y = 2.0
-	palette_background.position = color_palette.position
-	Globals.connect("current_color_changed", on_current_color_changed)
+	palette_background.size.x = color_palette.size.x + 4.0
+	palette_background.size.y = 22.0
+	palette_background.position.x = color_palette.position.x - 4.0
+	palette_background.position.y = color_palette.position.y - 20.0
+	Globals.connect("color_changed", _on_current_color_changed)
+	
+	$Menu/File/Dropdown.hide()
 
 
+#region CanvasLayer
 func _on_show_hide_pressed() -> void:
 	if not is_color_picker_visible:
 		animation_player.play("move")
@@ -27,11 +33,11 @@ func _on_close_pressed() -> void:
 
 
 func _on_add_pressed() -> void:
-	add_color_to_palette(color_picker.color)
+	_add_color_to_palette(color_picker.color)
 
 
 func _on_color_picker_color_changed(color: Color) -> void:
-	Globals.current_color = color
+	Globals.color = color
 	color_hex_input.text = color.to_html()
 
 
@@ -40,28 +46,47 @@ func _on_color_hex_input_changed() -> void:
 
 
 func _on_color_palette_color_deleted() -> void:
-	if not is_odd(Globals.current_palette.size()):
+	if not _is_odd(Globals.palette.size()):
 		palette_background.size.y -= 33.0
 
 
-func on_current_color_changed():
-	color_picker.color = Globals.current_color
+func _on_current_color_changed() -> void:
+	color_picker.color = Globals.color
 
 
-func add_color_to_palette(color: Color) -> void:
+func _add_color_to_palette(color: Color) -> void:
 	if color_palette.add_color(color):
-		if is_odd(Globals.current_palette.size()):
+		if _is_odd(Globals.palette.size()):
 			palette_background.size.y += 33.0
 
 
-func is_odd(n: int) -> bool:
+func _is_odd(n: int) -> bool:
 	return n % 2 != 0
 
 
-func show_image_saved_notification(project_name: String, is_error: bool) -> void :
-	var text: String
-	if not is_error:
-		text = "\"[color=green]" + project_name + "[/color]\" saved!"
-	else:
-		text = "Failed to save."
-	$CanvasLayer/ImageSavedNotification/RichTextLabel.text = text
+func show_notification(notification_text: String) -> void:
+	$CanvasLayer/ImageSavedNotification.text = notification_text
+	$CanvasLayer/ImageSavedNotification/AnimationPlayer.play("show")
+
+
+func set_tool_label(text: String) -> void:
+	$CanvasLayer/ToolLabel.text = text
+#endregion
+
+#region Menu
+func _on_file_button_pressed() -> void:
+	if not $Menu/File/Dropdown.visible:
+		$Menu/File/Dropdown.show()
+		return
+	$Menu/File/Dropdown.hide()
+
+
+func _on_save_pressed() -> void:
+	save_image.emit()
+	$Menu/File/Dropdown.hide()
+
+
+func _on_export_pressed() -> void:
+	export_image.emit()
+	$Menu/File/Dropdown.hide()
+#endregion

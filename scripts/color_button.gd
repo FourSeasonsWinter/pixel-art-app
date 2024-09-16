@@ -22,7 +22,7 @@ func _on_button_mouse_exited() -> void:
 
 func _on_button_up() -> void:
 	delete_timer.stop()
-	Globals.set_current_color(button_color)
+	Globals.set_color(button_color)
 
 
 func _on_button_down() -> void:
@@ -30,5 +30,5 @@ func _on_button_down() -> void:
 
 
 func _on_delete_timer_timeout() -> void:
-	Globals.current_palette.remove_at(Globals.current_palette.find(color_rect.color))
+	Globals.palette.remove_at(Globals.palette.find(color_rect.color))
 	deleted.emit()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dwtnlealkcqyc"]
+[gd_scene load_steps=33 format=3 uid="uid://dwtnlealkcqyc"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_8fah8"]
 [ext_resource type="PackedScene" uid="uid://b2csmmvtfpbpp" path="res://scenes/color_palette.tscn" id="2_u6jp2"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://t3rhyfgjr6m3" path="res://assets/close.svg" id="5_7ybkb"]
 [ext_resource type="Texture2D" uid="uid://blkotc4gixhdl" path="res://assets/add.svg" id="7_jaayj"]
 [ext_resource type="FontFile" uid="uid://tq3ngwg7q26l" path="res://assets/ShareTechMono-Regular.ttf" id="8_88nnd"]
+[ext_resource type="FontFile" uid="uid://ctinep7t72xrg" path="res://assets/PixelifySans-Regular.ttf" id="9_sypjv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3uej4"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -98,6 +99,111 @@ _data = {
 "move_back": SubResource("Animation_oj3d4")
 }
 
+[sub_resource type="Animation" id="Animation_8tiag"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(32, 600)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2sbwt"]
+resource_name = "show"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.8),
+"transitions": PackedFloat32Array(1, 11.3137, 64.0001),
+"update": 0,
+"values": [Vector2(32, 600), Vector2(32, 552), Vector2(32, 550)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 7.21),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"show"
+}, {
+"args": [],
+"method": &"hide"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dsp4g"]
+_data = {
+"RESET": SubResource("Animation_8tiag"),
+"show": SubResource("Animation_2sbwt")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjvsp"]
+bg_color = Color(0.741176, 0.741176, 0.741176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j1vm8"]
+bg_color = Color(0.741176, 0.741176, 0.741176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_os7k6"]
+bg_color = Color(0.741176, 0.741176, 0.741176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4cvw"]
+bg_color = Color(0.741385, 0.741385, 0.741384, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_07p4q"]
+bg_color = Color(0.741176, 0.741176, 0.741176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ke82a"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gdgix"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icrjx"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_prmd4"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
 [node name="hud" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -112,10 +218,10 @@ script = ExtResource("1_8fah8")
 [node name="PaletteBackground" type="Panel" parent="CanvasLayer"]
 
 [node name="ColorPalette" parent="CanvasLayer" instance=ExtResource("2_u6jp2")]
-offset_left = 31.0
-offset_top = 29.0
-offset_right = 99.0
-offset_bottom = 157.0
+offset_left = 8.0
+offset_top = 192.0
+offset_right = 76.0
+offset_bottom = 320.0
 
 [node name="ColorPick" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -202,22 +308,125 @@ libraries = {
 "": SubResource("AnimationLibrary_0x025")
 }
 
-[node name="ImageSavedNotification" type="Panel" parent="CanvasLayer"]
-offset_left = 16.0
-offset_top = 544.0
-offset_right = 240.0
-offset_bottom = 584.0
-theme_override_styles/panel = ExtResource("3_nbvmn")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/ImageSavedNotification"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 8.0
-offset_right = 256.0
-offset_bottom = 48.0
+[node name="ImageSavedNotification" type="RichTextLabel" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+offset_left = 32.0
+offset_top = 600.0
+offset_right = 704.0
+offset_bottom = 640.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("8_88nnd")
 bbcode_enabled = true
-text = "Image saved"
+text = "Image saved!"
+scroll_active = false
+shortcut_keys_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/ImageSavedNotification"]
+libraries = {
+"": SubResource("AnimationLibrary_dsp4g")
+}
+
+[node name="ToolLabel" type="Label" parent="CanvasLayer"]
+offset_left = 24.0
+offset_top = 520.0
+offset_right = 168.0
+offset_bottom = 576.0
+theme_override_fonts/font = ExtResource("9_sypjv")
+theme_override_font_sizes/font_size = 24
+text = "Brush"
+vertical_alignment = 2
+
+[node name="Menu" type="CanvasLayer" parent="."]
+
+[node name="File" type="Control" parent="Menu"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_group_ = true
+
+[node name="Button" type="Button" parent="Menu/File"]
+layout_mode = 0
+offset_right = 56.0
+offset_bottom = 24.0
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("8_88nnd")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxFlat_jjvsp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_j1vm8")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_os7k6")
+theme_override_styles/normal = SubResource("StyleBoxFlat_e4cvw")
+text = "File"
+
+[node name="Dropdown" type="Panel" parent="Menu/File"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 128.0
+offset_bottom = 152.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_07p4q")
+
+[node name="Save" type="Button" parent="Menu/File/Dropdown"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 103.0
+offset_bottom = 32.0
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("8_88nnd")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ke82a")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gdgix")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_icrjx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_prmd4")
+text = "Save"
+alignment = 0
+
+[node name="New" type="Button" parent="Menu/File/Dropdown"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 103.0
+offset_bottom = 64.0
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("8_88nnd")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ke82a")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gdgix")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_icrjx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_prmd4")
+text = "New
+"
+alignment = 0
+
+[node name="Open" type="Button" parent="Menu/File/Dropdown"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 64.0
+offset_right = 103.0
+offset_bottom = 96.0
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("8_88nnd")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ke82a")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gdgix")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_icrjx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_prmd4")
+text = "Open"
+alignment = 0
+
+[node name="Export" type="Button" parent="Menu/File/Dropdown"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 96.0
+offset_right = 103.0
+offset_bottom = 128.0
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("8_88nnd")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ke82a")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gdgix")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_icrjx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_prmd4")
+text = "Export"
+alignment = 0
 
 [connection signal="color_deleted" from="CanvasLayer/ColorPalette" to="." method="_on_color_palette_color_deleted"]
 [connection signal="color_changed" from="CanvasLayer/ColorPick/ColorPicker" to="." method="_on_color_picker_color_changed"]
@@ -225,3 +434,6 @@ text = "Image saved"
 [connection signal="pressed" from="CanvasLayer/ColorPick/Close" to="." method="_on_close_pressed"]
 [connection signal="pressed" from="CanvasLayer/ColorPick/ShowHide" to="." method="_on_show_hide_pressed"]
 [connection signal="text_changed" from="CanvasLayer/ColorPick/ColorHexInput" to="." method="_on_color_hex_input_changed"]
+[connection signal="pressed" from="Menu/File/Button" to="." method="_on_file_button_pressed"]
+[connection signal="pressed" from="Menu/File/Dropdown/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="Menu/File/Dropdown/Export" to="." method="_on_export_pressed"]

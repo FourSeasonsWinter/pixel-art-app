@@ -1,10 +1,9 @@
 extends Node
-signal current_color_changed
+signal color_changed
 
-var start_color := Color.TRANSPARENT
-var current_color := Color.WHITE
-var current_palette := []
+var color: Color
+var palette: Array
 
-func set_current_color(color: Color):
-	current_color = color
-	current_color_changed.emit()
+func set_color(c: Color):
+	color = c
+	color_changed.emit()
