@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dwtnlealkcqyc"]
+[gd_scene load_steps=35 format=3 uid="uid://dwtnlealkcqyc"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_8fah8"]
 [ext_resource type="PackedScene" uid="uid://b2csmmvtfpbpp" path="res://scenes/color_palette.tscn" id="2_u6jp2"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://blkotc4gixhdl" path="res://assets/add.svg" id="7_jaayj"]
 [ext_resource type="FontFile" uid="uid://tq3ngwg7q26l" path="res://assets/ShareTechMono-Regular.ttf" id="8_88nnd"]
 [ext_resource type="FontFile" uid="uid://ctinep7t72xrg" path="res://assets/PixelifySans-Regular.ttf" id="9_sypjv"]
+[ext_resource type="FontFile" uid="uid://b2065p7er4fyu" path="res://assets/PixelifySans-Bold.ttf" id="10_223dy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3uej4"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -177,6 +178,9 @@ _data = {
 "show": SubResource("Animation_2sbwt")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ue21k"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjvsp"]
 bg_color = Color(0.741176, 0.741176, 0.741176, 1)
 
@@ -219,9 +223,9 @@ script = ExtResource("1_8fah8")
 
 [node name="ColorPalette" parent="CanvasLayer" instance=ExtResource("2_u6jp2")]
 offset_left = 8.0
-offset_top = 192.0
+offset_top = 256.0
 offset_right = 76.0
-offset_bottom = 320.0
+offset_bottom = 384.0
 
 [node name="ColorPick" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -308,6 +312,17 @@ libraries = {
 "": SubResource("AnimationLibrary_0x025")
 }
 
+[node name="ToolLabel" type="Label" parent="CanvasLayer"]
+offset_left = 24.0
+offset_top = 520.0
+offset_right = 168.0
+offset_bottom = 576.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.690196)
+theme_override_fonts/font = ExtResource("9_sypjv")
+theme_override_font_sizes/font_size = 24
+text = "Brush"
+vertical_alignment = 2
+
 [node name="ImageSavedNotification" type="RichTextLabel" parent="CanvasLayer"]
 modulate = Color(1, 1, 1, 0)
 offset_left = 32.0
@@ -328,15 +343,85 @@ libraries = {
 "": SubResource("AnimationLibrary_dsp4g")
 }
 
-[node name="ToolLabel" type="Label" parent="CanvasLayer"]
-offset_left = 24.0
-offset_top = 520.0
-offset_right = 168.0
-offset_bottom = 576.0
-theme_override_fonts/font = ExtResource("9_sypjv")
+[node name="ProjectName" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -176.0
+offset_right = 176.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("10_223dy")
 theme_override_font_sizes/font_size = 24
-text = "Brush"
-vertical_alignment = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ue21k")
+text = "Project Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NewProjectWindow" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 64.0
+offset_top = 40.0
+offset_right = 104.0
+offset_bottom = 80.0
+metadata/_edit_group_ = true
+
+[node name="Panel" type="Panel" parent="CanvasLayer/NewProjectWindow"]
+layout_mode = 0
+offset_right = 249.0
+offset_bottom = 168.0
+
+[node name="Name" type="LineEdit" parent="CanvasLayer/NewProjectWindow"]
+layout_mode = 2
+offset_left = 9.0
+offset_top = 10.0
+offset_right = 241.0
+offset_bottom = 48.0
+theme_override_fonts/font = ExtResource("9_sypjv")
+placeholder_text = "Project name"
+caret_blink = true
+
+[node name="Width" type="LineEdit" parent="CanvasLayer/NewProjectWindow"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 56.0
+offset_right = 76.0625
+offset_bottom = 87.0
+theme_override_fonts/font = ExtResource("9_sypjv")
+placeholder_text = "Width"
+caret_blink = true
+
+[node name="Height" type="LineEdit" parent="CanvasLayer/NewProjectWindow"]
+layout_mode = 0
+offset_left = 89.0
+offset_top = 56.0
+offset_right = 156.063
+offset_bottom = 87.0
+theme_override_fonts/font = ExtResource("9_sypjv")
+placeholder_text = "Height"
+caret_blink = true
+
+[node name="Cancel" type="Button" parent="CanvasLayer/NewProjectWindow"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 112.0
+offset_right = 121.0
+offset_bottom = 160.0
+theme_override_fonts/font = ExtResource("10_223dy")
+theme_override_font_sizes/font_size = 20
+text = "Cancel"
+
+[node name="Confirm" type="Button" parent="CanvasLayer/NewProjectWindow"]
+layout_mode = 0
+offset_left = 129.0
+offset_top = 112.0
+offset_right = 241.0
+offset_bottom = 160.0
+theme_override_fonts/font = ExtResource("10_223dy")
+theme_override_font_sizes/font_size = 20
+text = "Confirm"
 
 [node name="Menu" type="CanvasLayer" parent="."]
 
@@ -434,6 +519,9 @@ alignment = 0
 [connection signal="pressed" from="CanvasLayer/ColorPick/Close" to="." method="_on_close_pressed"]
 [connection signal="pressed" from="CanvasLayer/ColorPick/ShowHide" to="." method="_on_show_hide_pressed"]
 [connection signal="text_changed" from="CanvasLayer/ColorPick/ColorHexInput" to="." method="_on_color_hex_input_changed"]
+[connection signal="pressed" from="CanvasLayer/NewProjectWindow/Cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="CanvasLayer/NewProjectWindow/Confirm" to="." method="_on_confirm_pressed"]
 [connection signal="pressed" from="Menu/File/Button" to="." method="_on_file_button_pressed"]
 [connection signal="pressed" from="Menu/File/Dropdown/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="Menu/File/Dropdown/New" to="." method="_on_new_pressed"]
 [connection signal="pressed" from="Menu/File/Dropdown/Export" to="." method="_on_export_pressed"]

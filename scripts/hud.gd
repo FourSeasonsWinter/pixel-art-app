@@ -1,12 +1,14 @@
 extends Control
 signal save_image
 signal export_image
+signal create_image(name: String, width: int, height: int)
 
 @onready var color_picker: ColorPicker = $CanvasLayer/ColorPick/ColorPicker
 @onready var color_palette: Container = $CanvasLayer/ColorPalette
 @onready var animation_player: AnimationPlayer = $CanvasLayer/ColorPick/AnimationPlayer
 @onready var color_hex_input: TextEdit = $CanvasLayer/ColorPick/ColorHexInput
 @onready var palette_background: Panel = $CanvasLayer/PaletteBackground
+@onready var width_input: LineEdit = $CanvasLayer/NewProjectWindow/Width
 var is_color_picker_visible := false
 
 
@@ -18,6 +20,20 @@ func _ready() -> void:
 	Globals.connect("color_changed", _on_current_color_changed)
 	
 	$Menu/File/Dropdown.hide()
+	$CanvasLayer/NewProjectWindow.hide()
+
+
+func show_notification(notification_text: String) -> void:
+	$CanvasLayer/ImageSavedNotification.text = notification_text
+	$CanvasLayer/ImageSavedNotification/AnimationPlayer.play("show")
+
+
+func set_tool_label(text: String) -> void:
+	$CanvasLayer/ToolLabel.text = text
+
+
+func set_new_project(project_name: String) -> void:
+	$CanvasLayer/ProjectName.text = project_name
 
 
 #region CanvasLayer
@@ -62,15 +78,6 @@ func _add_color_to_palette(color: Color) -> void:
 
 func _is_odd(n: int) -> bool:
 	return n % 2 != 0
-
-
-func show_notification(notification_text: String) -> void:
-	$CanvasLayer/ImageSavedNotification.text = notification_text
-	$CanvasLayer/ImageSavedNotification/AnimationPlayer.play("show")
-
-
-func set_tool_label(text: String) -> void:
-	$CanvasLayer/ToolLabel.text = text
 #endregion
 
 #region Menu
@@ -86,7 +93,41 @@ func _on_save_pressed() -> void:
 	$Menu/File/Dropdown.hide()
 
 
+func _on_new_pressed() -> void:
+	$CanvasLayer/NewProjectWindow/Name.text = ""
+	$CanvasLayer/NewProjectWindow/Height.text = ""
+	$CanvasLayer/NewProjectWindow/Width.text = ""
+	$CanvasLayer/NewProjectWindow.show()
+	$Menu/File/Dropdown.hide()
+
+
 func _on_export_pressed() -> void:
 	export_image.emit()
 	$Menu/File/Dropdown.hide()
+#endregion
+
+#region NewProjectWindow
+func _on_cancel_pressed() -> void:
+	$CanvasLayer/NewProjectWindow.hide()
+
+
+func _on_confirm_pressed() -> void:
+	var name: String = $CanvasLayer/NewProjectWindow/Name.text
+	var width: String = $CanvasLayer/NewProjectWindow/Width.text
+	var height: String = $CanvasLayer/NewProjectWindow/Height.text
+	
+	if not width.is_valid_int() or not height.is_valid_int():
+		return
+	
+	var w: int = width.to_int()
+	var h: int = height.to_int()
+	
+	if (w > 64 or w < 1) or (h > 64 or h < 1):
+		return
+	
+	if name.is_empty():
+		return
+	
+	create_image.emit(name, w, h)
+	$CanvasLayer/NewProjectWindow.hide()
 #endregion
