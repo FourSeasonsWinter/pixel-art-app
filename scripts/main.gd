@@ -8,7 +8,6 @@ var project_name := "gengar"
 var width := 8
 var height := 8
 var background_color := Color.TRANSPARENT
-var grid := {}
 var last_color_selected: Color
 var canvas: Node2D
 var temp_resolution = Vector2i(1024, 1024)
@@ -36,6 +35,8 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 
 func create_canvas() -> void:
+	remove_child(canvas)
+	
 	var c = canvas_scene.instantiate()
 	c.width = width
 	c.height = height
@@ -43,6 +44,27 @@ func create_canvas() -> void:
 	c.pixel_size = pixel_size
 	c.create()
 	add_child(c)
+	
+	print("canvas created ", width, "x", height)
+	print(c.grid)
+	
+	canvas = c
+	canvas_background.size = Vector2(pixel_size * width, pixel_size * height)
+
+
+func create_canvas_from_image(path: String) -> void:
+	remove_child(canvas)
+	
+	var c = canvas_scene.instantiate()
+	c.width = width
+	c.height = height
+	c.background_color = background_color
+	c.pixel_size = pixel_size
+	c.create_from_image(path)
+	add_child(c)
+	
+	print("canvas created ", width, "x", height)
+	print(c.grid)
 	
 	canvas = c
 	canvas_background.size = Vector2(pixel_size * width, pixel_size * height)
@@ -90,6 +112,25 @@ func export_image() -> void:
 	image.save_png(file_path)
 
 
+func open_image(image_path: String) -> void:
+	var image = Image.load_from_file(image_path)
+	
+	if image == null:
+		return
+	
+	if image.get_width() > 64 || image.get_height() > 64:
+		hud.show_notification("Failed to load image, dimentions [color=red]too large[/color]!")
+		return
+	
+	width = image.get_width()
+	height = image.get_height()
+	create_canvas_from_image(image_path)
+	set_camera()
+	hud.set_new_project(image_path.substr(6, image_path.length() - 10))
+	
+	hud.show_notification("Image loaded.")
+
+
 func _on_hud_create_image(name: String, w: int, h: int) -> void:
 	project_name = name
 	width = w
@@ -115,3 +156,11 @@ func _on_hud_save_image() -> void:
 		hud.show_notification("\"[color=green]" + project_name + "[/color]\" saved as a png file!")
 	else:
 		hud.show_notification("Failed to save.")
+
+
+func _on_hud_open_image(path: String) -> void:
+	open_image(path)
+
+
+func _on_hud_rename_project(name: String) -> void:
+	project_name = name

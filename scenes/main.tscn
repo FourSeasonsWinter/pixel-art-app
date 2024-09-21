@@ -40,4 +40,6 @@ script = ExtResource("2_ayib2")
 
 [connection signal="create_image" from="hud" to="." method="_on_hud_create_image"]
 [connection signal="export_image" from="hud" to="." method="_on_hud_export_image"]
+[connection signal="open_image" from="hud" to="." method="_on_hud_open_image"]
+[connection signal="rename_project" from="hud" to="." method="_on_hud_rename_project"]
 [connection signal="save_image" from="hud" to="." method="_on_hud_save_image"]

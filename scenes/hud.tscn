@@ -360,6 +360,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="NewProjectWindow" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 64.0
@@ -423,6 +424,104 @@ theme_override_fonts/font = ExtResource("10_223dy")
 theme_override_font_sizes/font_size = 20
 text = "Confirm"
 
+[node name="OpenProjectWindow" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/OpenProjectWindow"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 64.0
+offset_right = 305.0
+offset_bottom = 140.0
+
+[node name="Label" type="Label" parent="CanvasLayer/OpenProjectWindow"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 72.0
+offset_right = 96.0
+offset_bottom = 95.0
+theme_override_fonts/font = ExtResource("10_223dy")
+text = "Image path"
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/OpenProjectWindow"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 100.0
+offset_right = 296.0
+offset_bottom = 131.0
+caret_blink = true
+
+[node name="Load" type="Button" parent="CanvasLayer/OpenProjectWindow"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 64.0
+offset_right = 294.0
+offset_bottom = 95.0
+theme_override_fonts/font = ExtResource("10_223dy")
+text = "Load"
+
+[node name="Cancel" type="Button" parent="CanvasLayer/OpenProjectWindow"]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 64.0
+offset_right = 244.0
+offset_bottom = 95.0
+theme_override_fonts/font = ExtResource("10_223dy")
+text = "Cancel"
+
+[node name="RenameProject" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer/RenameProject"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 64.0
+offset_right = 305.0
+offset_bottom = 140.0
+
+[node name="Label" type="Label" parent="CanvasLayer/RenameProject"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 72.0
+offset_right = 96.0
+offset_bottom = 95.0
+theme_override_fonts/font = ExtResource("10_223dy")
+text = "New name"
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/RenameProject"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 100.0
+offset_right = 296.0
+offset_bottom = 131.0
+caret_blink = true
+
+[node name="Done" type="Button" parent="CanvasLayer/RenameProject"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 64.0
+offset_right = 294.0
+offset_bottom = 95.0
+theme_override_fonts/font = ExtResource("10_223dy")
+text = "Done"
+
+[node name="Cancel" type="Button" parent="CanvasLayer/RenameProject"]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 64.0
+offset_right = 244.0
+offset_bottom = 95.0
+theme_override_fonts/font = ExtResource("10_223dy")
+text = "Cancel"
+
 [node name="Menu" type="CanvasLayer" parent="."]
 
 [node name="File" type="Control" parent="Menu"]
@@ -430,7 +529,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-metadata/_edit_group_ = true
 
 [node name="Button" type="Button" parent="Menu/File"]
 layout_mode = 0
@@ -446,11 +544,12 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_e4cvw")
 text = "File"
 
 [node name="Dropdown" type="Panel" parent="Menu/File"]
+visible = false
 layout_mode = 0
 offset_left = 32.0
 offset_top = 24.0
 offset_right = 128.0
-offset_bottom = 152.0
+offset_bottom = 184.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_07p4q")
 
 [node name="Save" type="Button" parent="Menu/File/Dropdown"]
@@ -513,6 +612,21 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_prmd4")
 text = "Export"
 alignment = 0
 
+[node name="Rename" type="Button" parent="Menu/File/Dropdown"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 128.0
+offset_right = 103.0
+offset_bottom = 160.0
+mouse_default_cursor_shape = 2
+theme_override_fonts/font = ExtResource("8_88nnd")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ke82a")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gdgix")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_icrjx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_prmd4")
+text = "Rename"
+alignment = 0
+
 [connection signal="color_deleted" from="CanvasLayer/ColorPalette" to="." method="_on_color_palette_color_deleted"]
 [connection signal="color_changed" from="CanvasLayer/ColorPick/ColorPicker" to="." method="_on_color_picker_color_changed"]
 [connection signal="pressed" from="CanvasLayer/ColorPick/Add" to="." method="_on_add_pressed"]
@@ -521,7 +635,13 @@ alignment = 0
 [connection signal="text_changed" from="CanvasLayer/ColorPick/ColorHexInput" to="." method="_on_color_hex_input_changed"]
 [connection signal="pressed" from="CanvasLayer/NewProjectWindow/Cancel" to="." method="_on_cancel_pressed"]
 [connection signal="pressed" from="CanvasLayer/NewProjectWindow/Confirm" to="." method="_on_confirm_pressed"]
+[connection signal="pressed" from="CanvasLayer/OpenProjectWindow/Load" to="." method="_on_open_load_pressed"]
+[connection signal="pressed" from="CanvasLayer/OpenProjectWindow/Cancel" to="." method="_on_open_cancel_pressed"]
+[connection signal="pressed" from="CanvasLayer/RenameProject/Done" to="." method="_on_rename_done_pressed"]
+[connection signal="pressed" from="CanvasLayer/RenameProject/Cancel" to="." method="_on_rename_cancel_pressed"]
 [connection signal="pressed" from="Menu/File/Button" to="." method="_on_file_button_pressed"]
 [connection signal="pressed" from="Menu/File/Dropdown/Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="Menu/File/Dropdown/New" to="." method="_on_new_pressed"]
+[connection signal="pressed" from="Menu/File/Dropdown/Open" to="." method="_on_open_pressed"]
 [connection signal="pressed" from="Menu/File/Dropdown/Export" to="." method="_on_export_pressed"]
+[connection signal="pressed" from="Menu/File/Dropdown/Rename" to="." method="_on_rename_pressed"]

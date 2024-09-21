@@ -2,6 +2,8 @@ extends Control
 signal save_image
 signal export_image
 signal create_image(name: String, width: int, height: int)
+signal open_image(path: String)
+signal rename_project(name: String)
 
 @onready var color_picker: ColorPicker = $CanvasLayer/ColorPick/ColorPicker
 @onready var color_palette: Container = $CanvasLayer/ColorPalette
@@ -18,9 +20,6 @@ func _ready() -> void:
 	palette_background.position.x = color_palette.position.x - 4.0
 	palette_background.position.y = color_palette.position.y - 20.0
 	Globals.connect("color_changed", _on_current_color_changed)
-	
-	$Menu/File/Dropdown.hide()
-	$CanvasLayer/NewProjectWindow.hide()
 
 
 func show_notification(notification_text: String) -> void:
@@ -104,6 +103,16 @@ func _on_new_pressed() -> void:
 func _on_export_pressed() -> void:
 	export_image.emit()
 	$Menu/File/Dropdown.hide()
+
+
+func _on_open_pressed() -> void:
+	$Menu/File/Dropdown.hide()
+	$CanvasLayer/OpenProjectWindow.show()
+
+
+func _on_rename_pressed() -> void:
+	$Menu/File/Dropdown.hide()
+	$CanvasLayer/RenameProject.show()
 #endregion
 
 #region NewProjectWindow
@@ -130,4 +139,25 @@ func _on_confirm_pressed() -> void:
 	
 	create_image.emit(name, w, h)
 	$CanvasLayer/NewProjectWindow.hide()
+#endregion
+
+#region OpenProjectWindow
+func _on_open_load_pressed() -> void:
+	open_image.emit($CanvasLayer/OpenProjectWindow/LineEdit.text)
+	$CanvasLayer/OpenProjectWindow.hide()
+
+
+func _on_open_cancel_pressed() -> void:
+	$CanvasLayer/OpenProjectWindow.hide()
+#endregion
+
+#region RenameProjectWindow
+func _on_rename_done_pressed() -> void:
+	rename_project.emit($CanvasLayer/RenameProject/LineEdit.text)
+	$CanvasLayer/RenameProject.hide()
+	$CanvasLayer/ProjectName.text = $CanvasLayer/RenameProject/LineEdit.text
+
+func _on_rename_cancel_pressed() -> void:
+	$CanvasLayer/RenameProject/LineEdit.text = ""
+	$CanvasLayer/RenameProject.hide()
 #endregion
