@@ -4,6 +4,9 @@ extends Node
 @onready var hud: Control = $hud
 @onready var canvas_background: ColorRect = $CanvasBackground
 
+var pen_cursor = preload("res://assets/Pen.png")
+var eraser_cursor = preload("res://assets/Eraser.png")
+
 var project_name := "gengar"
 var width := 8
 var height := 8
@@ -19,16 +22,24 @@ const canvas_index = 4
 func _ready() -> void:
 	create_canvas()
 	set_camera()
+	
+	Input.set_custom_mouse_cursor(pen_cursor)
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("brush"):
 		Globals.color = last_color_selected
+		Input.set_custom_mouse_cursor(pen_cursor)
 		hud.set_tool_label("Brush")
 	
 	if event.is_action_pressed("eraser"):
 		Globals.color = background_color
+		Input.set_custom_mouse_cursor(eraser_cursor)
 		hud.set_tool_label("Eraser")
+	
+	if event.is_action_pressed("select"):
+		Globals.color = canvas.grid[Globals.coord].color
+		hud.set_color_picker(Globals.color)
 	
 	if event.is_action_pressed("save"):
 		save_image()
@@ -36,6 +47,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 func create_canvas() -> void:
 	remove_child(canvas)
+	Globals.coord = Vector2i.ZERO
 	
 	var c = canvas_scene.instantiate()
 	c.width = width
@@ -45,15 +57,13 @@ func create_canvas() -> void:
 	c.create()
 	add_child(c)
 	
-	print("canvas created ", width, "x", height)
-	print(c.grid)
-	
 	canvas = c
 	canvas_background.size = Vector2(pixel_size * width, pixel_size * height)
 
 
 func create_canvas_from_image(path: String) -> void:
 	remove_child(canvas)
+	Globals.coord = Vector2i.ZERO
 	
 	var c = canvas_scene.instantiate()
 	c.width = width
@@ -62,9 +72,6 @@ func create_canvas_from_image(path: String) -> void:
 	c.pixel_size = pixel_size
 	c.create_from_image(path)
 	add_child(c)
-	
-	print("canvas created ", width, "x", height)
-	print(c.grid)
 	
 	canvas = c
 	canvas_background.size = Vector2(pixel_size * width, pixel_size * height)
@@ -126,8 +133,9 @@ func open_image(image_path: String) -> void:
 	height = image.get_height()
 	create_canvas_from_image(image_path)
 	set_camera()
-	hud.set_new_project(image_path.substr(6, image_path.length() - 10))
 	
+	project_name = image_path.substr(6, image_path.length() - 10)
+	hud.set_new_project(project_name)
 	hud.show_notification("Image loaded.")
 
 

@@ -1,9 +1,14 @@
 extends ColorRect
 
 @onready var outline: Line2D = $Line2D
+var coordinates: Vector2i
 
 func _ready() -> void:
 	outline.hide()
+
+
+func get_pixel_color() -> Color:
+	return color
 
 
 func _on_button_down() -> void:
@@ -15,6 +20,7 @@ func _on_mouse_entered() -> void:
 		color = Globals.color
 	
 	outline.show()
+	Globals.coord = coordinates
 
 
 func _on_mouse_exited() -> void:

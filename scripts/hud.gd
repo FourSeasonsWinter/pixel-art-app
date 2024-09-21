@@ -35,6 +35,10 @@ func set_new_project(project_name: String) -> void:
 	$CanvasLayer/ProjectName.text = project_name
 
 
+func set_color_picker(color: Color) -> void:
+	color_picker.color = color
+
+
 #region CanvasLayer
 func _on_show_hide_pressed() -> void:
 	if not is_color_picker_visible:

@@ -29,7 +29,8 @@ func _create() -> void:
 			var pixel = pixel_scene.instantiate()
 			pixel.position = Vector2(pixel_size * x, pixel_size * y)
 			pixel.color = background_color
-			grid[Vector2i(x, y)] = pixel
+			pixel.coordinates = Vector2i(x, y)
+			grid[pixel.coordinates] = pixel
 			call_deferred("add_child", pixel)
 
 
@@ -41,5 +42,6 @@ func _create_from_image(path: String) -> void:
 			var pixel = pixel_scene.instantiate()
 			pixel.position = Vector2(pixel_size * x, pixel_size * y)
 			pixel.color = image.get_pixel(x, y)
-			grid[Vector2i(x, y)] = pixel
+			pixel.coordinates = Vector2i(x, y)
+			grid[pixel.coordinates] = pixel
 			call_deferred("add_child", pixel)
