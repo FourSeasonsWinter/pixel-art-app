@@ -10,6 +10,11 @@ const pixel_scene = preload("res://scenes/pixel.tscn")
 
 
 func create() -> void:
+	var thread = Thread.new()
+	thread.start(_create)
+
+
+func _create() -> void:
 	for y in height:
 		for x in width:
 			var pixel = pixel_scene.instantiate()

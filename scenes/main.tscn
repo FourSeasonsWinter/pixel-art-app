@@ -39,4 +39,5 @@ script = ExtResource("2_ayib2")
 [node name="hud" parent="." instance=ExtResource("3_ixn38")]
 
 [connection signal="create_image" from="hud" to="." method="_on_hud_create_image"]
-[connection signal="save_image" from="hud" to="." method="save_image"]
+[connection signal="export_image" from="hud" to="." method="_on_hud_export_image"]
+[connection signal="save_image" from="hud" to="." method="_on_hud_save_image"]

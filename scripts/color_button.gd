@@ -2,7 +2,6 @@ extends Control
 signal deleted
 
 @onready var color_rect: ColorRect = $ColorRect
-@onready var darker: Polygon2D = $Darker
 @onready var line: Line2D = $Line2D
 @onready var delete_timer: Timer = $DeleteTimer
 var button_color: Color

@@ -4,15 +4,14 @@ extends Node
 @onready var hud: Control = $hud
 @onready var canvas_background: ColorRect = $CanvasBackground
 
-@export var project_name := "gengar"
-@export var width := 8
-@export var height := 8
-@export var resolution := Vector2i(64, 64)
-@export var background_color := Color.TRANSPARENT
-
+var project_name := "gengar"
+var width := 8
+var height := 8
+var background_color := Color.TRANSPARENT
 var grid := {}
 var last_color_selected: Color
 var canvas: Node2D
+var temp_resolution = Vector2i(1024, 1024)
 
 const pixel_size = 16
 const canvas_scene = preload("res://scenes/canvas.tscn")
@@ -59,7 +58,7 @@ func set_camera() -> void:
 	camera.limit_bottom = pixel_size * (height / 2) + 600
 
 
-func save_image() -> void:
+func save_image() -> bool:
 	var image = Image.create_empty(width, height, false, Image.FORMAT_RGBA8)
 	
 	for y in range(height):
@@ -68,15 +67,27 @@ func save_image() -> void:
 			image.set_pixel(x, y, color)
 	
 	var file_path = "res://" + project_name + ".png"
-	var error = image.save_png(file_path) != OK
-	var notification_text: String
+	return image.save_png(file_path) != OK
+
+
+func export_image() -> void:
+	var image = Image.create_empty(temp_resolution.x, temp_resolution.y, false, Image.FORMAT_RGBA8)
+	var pixels_per_pixel = Vector2i(floori(temp_resolution.x / width), floori(temp_resolution.y / height))
+	var offset = Vector2i(0, 0)
 	
-	if not error:
-		notification_text = "\"[color=green]" + project_name + "[/color]\" saved as a png file!"
-	else:
-		notification_text = "Failed to save."
+	for y in range(height):
+		offset.x = 0
+		for x in range(width):
+			var color = canvas.grid[Vector2i(x, y)].color
+			
+			for y2 in range(pixels_per_pixel.y):
+				for x2 in range(pixels_per_pixel.x):
+					image.set_pixel(x2 + offset.x, y2 + offset.y, color)
+			offset.x += pixels_per_pixel.x
+		offset.y += pixels_per_pixel.y
 	
-	hud.show_notification(notification_text)
+	var file_path = "res://" + project_name + "_export.png"
+	image.save_png(file_path)
 
 
 func _on_hud_create_image(name: String, w: int, h: int) -> void:
@@ -88,3 +99,19 @@ func _on_hud_create_image(name: String, w: int, h: int) -> void:
 	create_canvas()
 	set_camera()
 	hud.set_new_project(name)
+
+
+func _on_hud_export_image() -> void:
+	hud.show_notification("Exporting \"[color=green]" + project_name + "[/color]\"...")
+	
+	var thread = Thread.new()
+	thread.start(export_image)
+
+
+func _on_hud_save_image() -> void:
+	var is_error = save_image()
+	
+	if not is_error:
+		hud.show_notification("\"[color=green]" + project_name + "[/color]\" saved as a png file!")
+	else:
+		hud.show_notification("Failed to save.")
