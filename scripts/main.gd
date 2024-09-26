@@ -13,7 +13,6 @@ var height := 8
 var background_color := Color.TRANSPARENT
 var last_color_selected: Color
 var canvas: Node2D
-var temp_resolution = Vector2i(1024, 1024)
 
 const pixel_size = 16
 const canvas_scene = preload("res://scenes/canvas.tscn")
@@ -100,8 +99,15 @@ func save_image() -> bool:
 
 
 func export_image() -> void:
-	var image = Image.create_empty(temp_resolution.x, temp_resolution.y, false, Image.FORMAT_RGBA8)
-	var pixels_per_pixel = Vector2i(floori(temp_resolution.x / width), floori(temp_resolution.y / height))
+	var export_height = height * 2
+	var export_width = width * 2
+	
+	while export_height < 400 or export_width < 400:
+		export_height *= 2
+		export_width *= 2
+	
+	var image = Image.create_empty(export_width, export_height, false, Image.FORMAT_RGBA8)
+	var pixels_per_pixel = Vector2i(floori(export_width / width), floori(export_height / height))
 	var offset = Vector2i(0, 0)
 	
 	for y in range(height):
@@ -154,7 +160,9 @@ func _on_hud_export_image() -> void:
 	hud.show_notification("Exporting \"[color=green]" + project_name + "[/color]\"...")
 	
 	var thread = Thread.new()
-	thread.start(export_image)
+	await thread.start(export_image)
+	
+	hud.show_notification("[color=green]" + project_name + "[/color] exported.")
 
 
 func _on_hud_save_image() -> void:
